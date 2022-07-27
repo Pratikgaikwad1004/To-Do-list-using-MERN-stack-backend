@@ -1,11 +1,20 @@
-const express = require('express')
-const app = express()
-const port = 3000
+const connect = require('./db');
+const express = require('express');
+const cors = require('cors')
 
-app.get('/', (req, res) => {
-  res.send('Hello World!')
-})
+connect();
+const app = express();
+
+const port = 8000;
+
+app.use(cors());
+// Middleware
+app.use(express.json());
+
+// Routes
+app.use('/api/auth', require('./routes/auth'));
+app.use('/api/list', require('./routes/list'));
 
 app.listen(port, () => {
-  console.log(`App listening on port ${port}`)
+  console.log(`Events app listening on port http://localhost:${port}`)
 })
